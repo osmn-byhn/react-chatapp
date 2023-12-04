@@ -1,47 +1,57 @@
-.App {
-  text-align: center;
+
+h3 {
+    text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.chat-header {
+  padding-top: 2vh;  
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.chat-footer {
+  position: fixed;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Sayfanın genişliğine uyacak şekilde ayarlayın */
+  background-color: #f1f1f1; /* İsteğe bağlı: Arka plan rengini belirleyin */
+  padding: 10px;
+}
+.chat-footer >  input {
+  width: 90%;
+}
+.chat-footer >  button {
+  width: 8%;
+  margin-left: 1%;
 }
 
-.App-link {
-  color: #61dafb;
+/* Chat bileşeni stil özellikleri */
+.chat-body {
+  height: auto; /* Mesajları göstermek için bir yükseklik belirleyin, isteğe bağlı olarak değiştirilebilir */
+  overflow-y: scroll; /* Mesajlar ekranın dışına taştığında kaydırma çubuğunu göster */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#message {
+  display: flex;
+  flex-direction: column; /* Mesajları dikey olarak düzenle */
 }
 
-
-#you {
-  background-color: red;
+/* Mesajları stil özellikleri */
+#message p {
+  margin: 5px; /* Mesajlar arasında boşluk bırakın, isteğe bağlı olarak değiştirilebilir */
+  padding: 10px; /* Mesaj içeriğine boşluk ekleyin, isteğe bağlı olarak değiştirilebilir */
+  border-radius: 15px; /* Mesaj köşelerini yuvarlaştırın, isteğe bağlı olarak değiştirilebilir */
 }
 
-#other {
-  background-color: blue;
+/* Kendi mesajlarınızı (you) sağa yaslamak için */
+#message p#you {
+  align-self: flex-end;
+  background-color: #4CAF50; /* İsteğe bağlı: Kendi mesajlarınızı belirginleştirmek için arkaplan rengini değiştirin */
+  color: white; /* İsteğe bağlı: Metin rengini belirginleştirmek için renk seçin */
+  border-top-right-radius: 0px;
+}
+
+/* Diğer kişinin mesajlarını (other) sola yaslamak için */
+#message p#other {
+  align-self: flex-start;
+  background-color: #ddd; /* İsteğe bağlı: Diğer kişinin mesajlarını belirginleştirmek için arkaplan rengini değiştirin */
+  border-top-left-radius: 0px;
 }

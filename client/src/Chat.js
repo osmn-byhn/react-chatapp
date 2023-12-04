@@ -30,20 +30,20 @@ function Chat({ socket, username, room }) {
   }, [socket]);
 
   return (
-    <div>
+    <div className="container">
       <div className="chat-header">
-        <p>Live Chat</p>
+        <h5>Live Chat - {room} Room</h5>
       </div>
       <div className="chat-body">
-        <ul>
+        <div id="message">
           {messageList.map((message, index) => (
-            <li key={index}  id={username === message.author ? "you" : "other"}>
+            <p key={index} id={username === message.author ? "you" : "other"}>
               {message.message}
-            </li>
+            </p>
           ))}
-        </ul>
+        </div>
       </div>
-      <div className="chat-footer">
+      <div className="chat-footer row">
         <input
           type="text"
           placeholder="Heyy..."
@@ -51,6 +51,7 @@ function Chat({ socket, username, room }) {
             setCurrentMessage(event.target.value);
           }}
           value={currentMessage}
+          className="form-control "
         />
         <button
           disabled={!currentMessage}
@@ -58,6 +59,7 @@ function Chat({ socket, username, room }) {
           onKeyPress={(event) => {
             event.key === "Enter" && sendMessage();
           }}
+          className="btn btn-dark"
         >
           Send
         </button>

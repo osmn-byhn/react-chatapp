@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./Chat";
 
+
 const socket = io.connect("https://backend-chatapp-d0gj.onrender.com");
 
 function App() {
@@ -18,25 +19,29 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App container">
       {!showChat ? (
-        <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
+        <div className="joinChatContainer row">
+          <h3 className="mb-5 mt-5">Join A Chat</h3>
           <input
             type="text"
             placeholder="John..."
             onChange={(event) => {
               setUsername(event.target.value);
             }}
+            className="col-12 form-control mb-4"
           />
+          <br></br><br></br>
           <input
             type="text"
             placeholder="Room ID..."
             onChange={(event) => {
               setRoom(event.target.value);
             }}
+            className="col-12 form-control mb-4"
           />
-          <button onClick={joinRoom}>Join A Room</button>
+
+          <button onClick={joinRoom} className="btn btn-dark">Join A Room</button>
         </div>
       ) : (
         <Chat socket={socket} username={username} room={room} />

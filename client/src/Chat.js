@@ -1,58 +1,68 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from "react";
 
-function Chat({socket, username, room}) {
-    const [currentMesssage, setCurrentMessage] = useState()
+function Chat({ socket, username, room }) {
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
 
-    const sendMessage = async () => {
-        if (currentMesssage !== "") {
-            const messageData = {
-                room: room,
-                author: username,
-                message: currentMesssage,
-                time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
-            }
-            await socket.emit("send_message", messageData);
-            setCurrentMessage('')
-        }
-        
+  const sendMessage = async () => {
+    if (currentMessage !== "") {
+      const messageData = {
+        room: room,
+        author: username,
+        message: currentMessage,
+        time:
+          new Date(Date.now()).getHours() +
+          ":" +
+          new Date(Date.now()).getMinutes(),
+      };
 
+      await socket.emit("send_message", messageData);
+      setMessageList((list) => [...list, messageData]);
+      setCurrentMessage("");
     }
-    useEffect(() => {
-        socket.on("receive_message", (data) =>{
-            console.log(data);
-        });
-    
-        // Cleanup function to remove the event listener when the component unmounts
-        return () => {
-            socket.off("receive_message");
-        };
-    }, [socket]);
-    
+    console.log(messageList);
+  };
+
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+    });
+  }, [socket]);
+
   return (
     <div>
-        <div className='chat-header'>
-            <p>Live Chat</p>
-        </div>
-        <div className='chat-body'></div>
-        <div className='chat-footer'>
-            <input type='text' placeholder='Heyy...' 
-                onChange={(event) => {
-                    setCurrentMessage(event.target.value)}
-                } 
-            />
-            <button 
-            disabled={!currentMesssage} 
-            onClick={sendMessage}
-            value={currentMesssage}
-            onKeyPress={(event) => {
-                event.key === "Enter" && sendMessage();
-            }}
-          >
-            Send
-            </button>
-        </div>
+      <div className="chat-header">
+        <p>Live Chat</p>
+      </div>
+      <div className="chat-body" id="element">
+        <ul>
+          {messageList.map((message, index) => (
+            <li key={index}>
+              {message.author}: {message.message}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="chat-footer">
+        <input
+          type="text"
+          placeholder="Heyy..."
+          onChange={(event) => {
+            setCurrentMessage(event.target.value);
+          }}
+          value={currentMessage}
+        />
+        <button
+          disabled={!currentMessage}
+          onClick={sendMessage}
+          onKeyPress={(event) => {
+            event.key === "Enter" && sendMessage();
+          }}
+        >
+          Send
+        </button>
+      </div>
     </div>
-  )
+  );
 }
 
 export default Chat;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -34,11 +34,11 @@ function Chat({ socket, username, room }) {
       <div className="chat-header">
         <p>Live Chat</p>
       </div>
-      <div className="chat-body" id="element">
+      <div className="chat-body">
         <ul>
           {messageList.map((message, index) => (
-            <li key={index}>
-              {message.author}: {message.message}
+            <li key={index}  id={username === message.author ? "you" : "other"}>
+              {message.message}
             </li>
           ))}
         </ul>

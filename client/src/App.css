@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+
+#you {
+  background-color: red;
+}
+
+#other {
+  background-color: blue;
+}
